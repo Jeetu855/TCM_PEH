@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Discovering Emails</string>
+  <key>nodeid</key><string>6982a6f5-9c1d-4720-a4d6-42cbd9765136</string>
+  <key>modified_time</key><integer>1682574649</integer>
+  <key>expanded2</key><true/>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1682573659</integer>
+  <key>order</key><integer>1</integer>
+</dict>
+</node>

@@ -1,0 +1,99 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Walkthrough</title>
+</head><body><img src="image.png"/><br/>
+<br/>
+<img src="image 2.png"/><br/>
+<br/>
+<br/>
+<img src="image 4.png"/><br/>
+<br/>
+<br/>
+<img src="image 3.png"/><br/>
+<br/>
+lolololololollloolollolooloololoo haahahhahahaahahah<br/>
+<br/>
+port 53:DNS<br/>
+<br/>
+#dnsrecon -r 127.0.0.0/24 -n &lt;DNS to use&gt; -d blah <br/>
+<br/>
+<img src="image 5.png"/><br/>
+-d:not need to provide anything but flag is necessary<br/>
+<br/>
+<img src="image 6.png"/><br/>
+<br/>
+add the dns to /etc/hosts<br/>
+<img src="image 7.png"/><br/>
+<br/>
+restart web browser and go to http://blackpearl.tcm<br/>
+<br/>
+we get php info page<br/>
+<br/>
+<img src="image 8.png"/><br/>
+<br/>
+<br/>
+<br/>
+<img src="image 9.png"/><br/>
+<br/>
+<br/>
+found a login page<br/>
+<br/>
+<img src="image 10.png"/><br/>
+<br/>
+google:navigate exploit(since its using navigate cms)<br/>
+<br/>
+https://www.exploit-db.com/exploits/45561(this is using metasploit)<br/>
+<br/>
+<img src="image 11.png"/><br/>
+#use 3(in this case)<br/>
+<br/>
+<img src="image 12.png"/><br/>
+<br/>
+<img src="image 13.png"/><br/>
+<br/>
+we have a shell but we dont see anything like username or machine(user@machineName) name like we normally see in linux<br/>
+<br/>
+we need to generate a tty shell<br/>
+<br/>
+#python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'   <br/>
+<br/>
+<img src="image 14.png"/><br/>
+<br/>
+<br/>
+now privilage escalatioon again:use linpeas<br/>
+<br/>
+<img src="image 15.png"/><br/>
+<br/>
+<br/>
+<img src="image 16.png"/><br/>
+<br/>
+we are looking for red and yellow<br/>
+<br/>
+SUID when 's' in owners rwx part:having this means we can run the file as same privilage as the owner of the file<br/>
+<img src="image 17.png"/><br/>
+<br/>
+<br/>
+SGID when 's' in group rwx part<br/>
+<br/>
+and Sticky Bit when 's' in others rwx part<br/>
+find all the files have SUID set<br/>
+<img src="image 18.png"/><br/>
+<br/>
+<br/>
+website:gtfobin-&gt;SUID<br/>
+match the options under SUID of gtfobin from the files having SUID set shown in above image<br/>
+eg:SUID is set for/php7.3 so check is php is an options or not in gtfobin under SUID<br/>
+<br/>
+<img src="image 19.png"/><br/>
+<br/>
+<img src="image 20.png"/><br/>
+<br/>
+<img src="image 21.png"/><br/>
+<br/>
+as proof of concept, cat /etc/shadow<br/>
+<br/>
+<img src="image 22.png"/><br/>
+<br/>
+<br/>
+</body></html>

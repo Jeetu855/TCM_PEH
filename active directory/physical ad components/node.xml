@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Physical AD components</string>
+  <key>nodeid</key><string>16a5c895-d0f3-426a-a692-62f77ce51a11</string>
+  <key>modified_time</key><integer>1687902589</integer>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1687808069</integer>
+  <key>order</key><integer>1</integer>
+</dict>
+</node>

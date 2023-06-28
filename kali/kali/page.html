@@ -1,0 +1,237 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Kali</title>
+</head><body>kali@kail ~<br/>
+<br/>
+1)username<br/>
+2)machine name<br/>
+3)home folder of user:eg home foler of user kali will be named kali<br/>
+suppose we are logged in as root so ~ will be root folder<br/>
+<br/>
+#pwd: print working directory<br/>
+<br/>
+#cd:change directory<br/>
+#cd .. : go 1 folder back<br/>
+<br/>
+/ : base folder or the root of the file system<br/>
+linux file system is like a tree and / is the root of that tree<br/>
+<br/>
+#ctrl + l :clear screen<br/>
+<br/>
+l#s:list<br/>
+<br/>
+#mkdir x:make directory named x<br/>
+<br/>
+#rmdir x:remove directory named x<br/>
+<br/>
+#ls -la:long listing all (also prints file name that may not be visible when using ls cmd)<br/>
+-l:long listing<br/>
+-a:all<br/>
+**********website :explain shell :used to know what cmd does what***************8<br/>
+<br/>
+#man ls:manual of ls<br/>
+OR<br/>
+#ls --help<br/>
+<br/>
+#echo 'Hi!'<br/>
+prints Hi<br/>
+<br/>
+#echo 'Hi' &gt; test.txt:echo into a file and when we run :cat text.txt o/p is Hi<br/>
+<br/>
+#cp:copy<br/>
+eg: cp test.txt Downloads: cp text.txt to downloads folder<br/>
+<br/>
+#rm fileName: to remove file<br/>
+<br/>
+#mv :move<br/>
+eg: mv text.txt Downloads: move text.txt to Downloads folder<br/>
+<br/>
+l#ocate test.txt<br/>
+wont get o/p of downloads folder coz we just updated it<br/>
+to see it run cmd<br/>
+#updatedb<br/>
+<br/>
+then again do : #locate text.txt: now it will show<br/>
+<br/>
+#passwd:change password<br/>
+<br/>
+1)rwx:owner permissions<br/>
+2)rwx:group permissions<br/>
+3)rwx:all other users permissions<br/>
+<br/>
+#chmod:change mode<br/>
+#chmod +rwx(+r , +w ,+x) fileName<br/>
+OR<br/>
+#chmod 777 fileName<br/>
+read:4<br/>
+write:2<br/>
+execute:1<br/>
+<br/>
+#sudo adduser newUserUsername: to add new user<br/>
+<br/>
+#whoami:logged in as which user<br/>
+<br/>
+<img src="image.png"/><br/>
+root:name of user<br/>
+0:userID<br/>
+/usr/bin/zsh:shell type:zsh<br/>
+<br/>
+<img src="image 2.png"/><br/>
+user:john<br/>
+userID:1001<br/>
+shell type:bash<br/>
+<br/>
+#cat /etc/passwd:list of users,type of services running on the machine<br/>
+<br/>
+#cat /etc/shadow:contains password hashes<br/>
+<br/>
+#su userName: switch User to given userName<br/>
+<br/>
+#cat /etc/sudoers: who has what privilages<br/>
+<br/>
+#cat /etc/group:who has what privilages<br/>
+<img src="image 3.png"/><br/>
+kali has sudo privilage<br/>
+<br/>
+#cat /etc/group|grep sudo<br/>
+<img src="image 4.png"/><br/>
+jeetu855 has sudo privilage<br/>
+<br/>
+-----------------Networking Commands----------------------<br/>
+<br/>
+#ip a OR #ifconfig: only shows ethernet or hardwired connections<br/>
+<br/>
+for wireless connections<br/>
+#iwconfig<br/>
+<br/>
+#ip n OR arp a<br/>
+n:neighbour<br/>
+<br/>
+<br/>
+#ip r OR route: routing table<br/>
+r:route<br/>
+<br/>
+#ping ipAddrss:check whether machine is online or not<br/>
+uses ICMP(Internet control message protocol) sometimes is disabled on some machines<br/>
+<br/>
+<br/>
+#echo &quot;Hi&quot; &gt; hey.txt<br/>
+#cat hey.txt :o/p= Hi<br/>
+to append to this file<br/>
+#echo &quot;Hi again &quot;&gt;&gt;hey.txt<br/>
+#cat hey.txt:o/p Hi<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><ul><li style="list-style-type: none">Hi again</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+to overwrite the file<br/>
+#echo 'Hi'&gt;hey.txt<br/>
+#cat hey.txt: o/p=Hi<br/>
+<br/>
+to create new file<br/>
+#touch newFileName<br/>
+<br/>
+----------Starting and Stopping Service--------------------<br/>
+<br/>
+service ServiceName start/stop/restart<br/>
+<br/>
+Start a server using python<br/>
+#python3 -m http.server 80<br/>
+-m:use module<br/>
+http.server:name of module<br/>
+80:port number(You canuse any portnumber you want)<br/>
+<br/>
+To make a service automatically start on system start<br/>
+#systemctl enable serviceName<br/>
+<br/>
+to disable service on start<br/>
+#systemctl disable serviceName<br/>
+<br/>
+<br/>
+--------------Updating Installing -----------------------<br/>
+<br/>
+#sudo apt update &amp;&amp; apt upgrade<br/>
+<br/>
+to install:<br/>
+#sudo apt-get install packageName<br/>
+<br/>
+to remove<br/>
+#sudo apt-get remove packageName<br/>
+<br/>
+to remove all the files of package<br/>
+#sudo apt pruge packageName<br/>
+<br/>
+#git clone httpsLink: clone in the opt older(prefarably not necessary)<br/>
+<br/>
+---------------Bash Scripting-----------------------------------<br/>
+<br/>
+#ping 192.168.29.117 -c 1<br/>
+<img src="image 5.png"/><br/>
+send 1 packet only<br/>
+-c:count<br/>
+<br/>
+#ping 192.168.57.4 -c 1 &gt;ip.txt<br/>
+send o/p of ping command to a file called ip.txt<br/>
+<br/>
+if want to grep multiple words need to use &quot; &quot;<br/>
+#grep &quot;64 bytes&quot; :use &quot; &quot; to grep multiple words<br/>
+<br/>
+#ping 192.168.29.117 -c 1| grep &quot;64 bytes&quot; | cut -d &quot; &quot; -f 4<br/>
+<img src="image 6.png"/><br/>
+-d:delimiter:here it is going to be space<br/>
+-f:select specific field: in this case field number 4 which is the ip address<br/>
+<br/>
+#ping 192.168.29.117 -c 1| grep &quot;64 bytes&quot; | cut -d &quot; &quot; -f 4|tr -d &quot;:&quot;<br/>
+<img src="image 7.png"/><br/>
+tr:translate<br/>
+-d:delimiter:here we are removing the colon<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body></html>

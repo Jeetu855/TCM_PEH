@@ -1,0 +1,135 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Walkthrough</title>
+</head><body>Server: Apache/2.4.38 (Debian)<br/>
+<br/>
+<img src="image.png"/><br/>
+<br/>
+<img src="image 2.png"/><br/>
+<br/>
+nfs_acl:network file share(similar to smb)<br/>
+<br/>
+#ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt:FUZZ -u http://192.168.57.9/FUZZ <br/>
+<br/>
+#showmount -e 192.168.57.9(target IP)<br/>
+<br/>
+https://www.youtube.com/watch?v=1TBD9aMQ7Rg(watch this to understand nfs and mount)<br/>
+<br/>
+<img src="image 3.png"/><br/>
+/srv/nsf:the folder that we can access<br/>
+172.16.0.0/12,10.0.0.0/8,192.168.0.0/16:all the ip address that can access the file share<br/>
+<br/>
+we create a folder /mnt/dev to link to server side file share folder that is /srv/nfs(server network file share)<br/>
+<br/>
+<img src="image 4.png"/><br/>
+<br/>
+this links folder nfs to /mnt/dev<br/>
+<br/>
+<img src="image 5.png"/><br/>
+<br/>
+we find save.zip file <br/>
+<img src="image 6.png"/><br/>
+<br/>
+but we dont have the password to unzip them<br/>
+<br/>
+tool:fcrackzip(to crack zip file passwd)<br/>
+#fcrackzip -v -u -D -p /usr/share/wordlists/rockyou.txt save.zip<br/>
+-v:verbosity<br/>
+-u:unzip<br/>
+-D:dictionary attack(the wordlists we will be using)<br/>
+-p:the file we attack<br/>
+<br/>
+<img src="image 7.png"/><br/>
+<br/>
+passwd is java101<br/>
+now unzip again<br/>
+<br/>
+<img src="image 8.png"/><br/>
+<br/>
+<img src="image 9.png"/><br/>
+jp:probably the name of user:use it in ssh connection attempt<br/>
+<br/>
+<img src="image 27.png"/><br/>
+we must have an ssh account on the server to be able to use it<br/>
+id_rsa can be used to connect via ssh(in nmap scan we saw ssh port 22 open)<br/>
+<br/>
+#ssh -i id_rsa jp@192.168.57.9<br/>
+<img src="image 10.png"/><br/>
+<br/>
+<br/>
+on port 8080:<br/>
+<img src="image 11.png"/><br/>
+http://192.168.57.9:8080/dev<br/>
+<br/>
+on port 80<br/>
+http://192.168.57.9/app<br/>
+<br/>
+<img src="image 12.png"/><br/>
+<br/>
+download config.yml<br/>
+<img src="image 13.png"/><br/>
+<br/>
+on port 8080 we have a registration page<br/>
+<br/>
+<img src="image 14.png"/><br/>
+just register with any username and passwd<br/>
+eg:member:hacker<br/>
+password:hacker<br/>
+<br/>
+<br/>
+<img src="image 15.png"/><br/>
+<br/>
+<br/>
+go to exploit db and check if anything is useful<br/>
+<br/>
+<img src="image 16.png"/><br/>
+<br/>
+paste that in url<br/>
+*we need to have created an account to perform Local File Inclusion(LFI)<br/>
+<br/>
+<img src="image 17.png"/><br/>
+<br/>
+<img src="image 18.png"/><br/>
+jp:jean paul(found him xD)<br/>
+<br/>
+try /etc/shadow is well(dosent work here but try on other instances)<br/>
+<br/>
+try ssh again with jeanpaul<br/>
+<br/>
+#ssh i id_rsa jeanpaul@192.168.57.9<br/>
+<img src="image 19.png"/><br/>
+we can either brute force passphrase or we found in the todo.txt <br/>
+<img src="image 20.png"/><br/>
+<br/>
+and we also found a password from config.yml<br/>
+<br/>
+<img src="image 21.png"/><br/>
+<br/>
+so we can try this passphrase<br/>
+<br/>
+<img src="image 22.png"/><br/>
+<br/>
+and we get access(but we are a low level user)<br/>
+<br/>
+<img src="image 23.png"/><br/>
+we can run sudo zip without password<br/>
+<br/>
+#sudo zip<br/>
+<br/>
+website:gtfobin(to search for different type of privilage escalation)<br/>
+here we require a sudo escalation<br/>
+<br/>
+click sudo then on zip<br/>
+<br/>
+<img src="image 24.png"/><br/>
+<br/>
+copy 1st cmd and paste<br/>
+then the 2nd cmd<br/>
+this gives us a shell<br/>
+if we type<br/>
+#id<br/>
+we are returned information telling us that we are root<br/>
+<img src="image 25.png"/><br/>
+<br/>
+<img src="image 26.png"/></body></html>

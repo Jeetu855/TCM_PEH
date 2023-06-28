@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Initial Attack Vector</string>
+  <key>nodeid</key><string>949c324a-2f68-430a-a2f4-c5cb7ae8baea</string>
+  <key>modified_time</key><integer>1687904096</integer>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1687871640</integer>
+  <key>order</key><integer>3</integer>
+</dict>
+</node>

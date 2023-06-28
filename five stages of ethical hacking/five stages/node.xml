@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Five stages</string>
+  <key>nodeid</key><string>41cb18e6-c0a8-4630-a3a7-2e07641a8179</string>
+  <key>modified_time</key><integer>1682572934</integer>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1682572769</integer>
+  <key>order</key><integer>0</integer>
+</dict>
+</node>

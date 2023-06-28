@@ -1,0 +1,18 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Nmap(network mapper)</title>
+</head><body>default is stealth scan:<br/>
+1)we send SYN<br/>
+2)Server sends SYN ACK(revealing port is open)<br/>
+3)Instead of sending ACK we send RST(Reset)<br/>
+<br/>
+#nmap -T4 -p- -A ipAddress<br/>
+-p-:scan all 65536(0-65535) ports<br/>
+-A:Enable OS detection, version detection, script scanning, and traceroute <br/>
+-T&lt;0-5&gt;: Set timing template (higher is faster) <br/>
+<br/>
+<br/>
+if we dont put any port, its going to scan top 1000 most common ports <br/>
+<br/>
+-sU:UDP scan,takes lot of time since UDP connectionless protocol</body></html>

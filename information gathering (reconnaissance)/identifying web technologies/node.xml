@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Identifying Web Technologies</string>
+  <key>nodeid</key><string>fc9b9f8e-fda6-408e-8694-909e24b91eaa</string>
+  <key>modified_time</key><integer>1682721659</integer>
+  <key>expanded2</key><true/>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1682721647</integer>
+  <key>order</key><integer>4</integer>
+</dict>
+</node>

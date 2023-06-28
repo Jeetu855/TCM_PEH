@@ -1,0 +1,81 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>LLMNR Poisining</title>
+</head><body>fcastle:local Admin in his own machine as well as paprker's machine<br/>
+paprker:local Admin only in his own machine<br/>
+<br/>
+LLMNR:Link Local Multicast Name Resolution<br/>
+used to identify host when DNS fails<br/>
+<br/>
+The Link-Local Multicast Name Resolution (LLMNR) is a protocol based on the Domain Name System (DNS) packet format<br/>
+that allows both IPv4 and IPv6 hosts to perform name resolution for hosts on the same local link<br/>
+<br/>
+<img src="image.png"/><br/>
+<br/>
+<img src="image 2.png"/><br/>
+<br/>
+#responder -I eth0 -wdv<br/>
+-I:interface which is eth0<br/>
+-v:verbose<br/>
+<br/>
+<img src="image 3.png"/><br/>
+<br/>
+running few servers to check for any connections<br/>
+<br/>
+run 2019 server and THEPUNISHER<br/>
+log into punisher as <br/>
+username:marvel\fcastle<br/>
+password:P@ssword<br/>
+<br/>
+<br/>
+go to file explorer<br/>
+<br/>
+<img src="image 4.png"/><br/>
+<br/>
+attacker IP<br/>
+and since we have servers running from responders, it will try to connect to them<br/>
+<br/>
+we get NTLMv2 hash <br/>
+<img src="image 5.png"/><br/>
+<br/>
+crack hash using hashcat<br/>
+<br/>
+#hashcat -m 5600 fcastlentlmv2hash.txt wordlist<br/>
+-m:module<br/>
+to find the module<br/>
+<br/>
+#hashcat --help<br/>
+<img src="image 6.png"/><br/>
+<br/>
+<img src="image 8.png"/><br/>
+and we get the password<br/>
+<br/>
+always run password cracking on main OS coz password cracking utlises GPU not CPU<br/>
+<br/>
+in windows<br/>
+#hascat64.exe -m 5600 fcastlentlmv2hash.txt rockyou.txt<br/>
+<br/>
+<br/>
+<img src="image 7.png"/><br/>
+<br/>
+<br/>
+<br/>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
+<br/>
+<img src="image 9.png"/><br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body></html>

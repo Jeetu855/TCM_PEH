@@ -1,0 +1,22 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Enumerating HTTP and HTTPS</title>
+</head><body>web Vulnerability scanner:nikto<br/>
+#nikto -h http://192.169.57.4<br/>
+-h:host<br/>
+<br/>
+vulnerabiltity: mod_ssl/2.8.4:vulnerable to remote buffer overflow<br/>
+<br/>
+Apache/1.3.20 (Unix) (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b(disclosed in Burp Suite target section :site map sub section)<br/>
+so Information disclosure:server header disclose version information<br/>
+<img src="image.png"/><br/>
+directory buster:<br/>
+tools:<br/>
+1)dirbuster:<br/>
+<br/>
+2)dirb<br/>
+3)gobuster<br/>
+#gobuster dir -e -u http://192.168.57.4 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt <br/>
+-u:url<br/>
+/usr/share/wordlists:path to wordlists</body></html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Enumerating SMB(Server mEssage Block)</title>
+</head><body><br/>
+Metasploit:<br/>
+#msfconsole<br/>
+#search smb<br/>
+1st part:type of module:eg:auxillary,exploit,post<br/>
+2nd part:type of action:eg:fuzzing,dos,gather,scanner<br/>
+#use moduleName/typeOfAction etc<br/>
+#info <br/>
+#options<br/>
+#set RHOSTS/RHOST ipOfVictiim<br/>
+RHOSTS:remote host/victim<br/>
+#run<br/>
+<img src="image.png"/><br/>
+<br/>
+samba version:2.2.1a<br/>
+<br/>
+smbclient:attempt to connect to the file share<br/>
+#smbclient -L \\\\&lt;victimIP&gt;\\  OR<br/>
+#smbclient -L \\&lt;victimIP&gt;<br/>
+-L:list all files<br/>
+<img src="image 2.png"/><br/>
+ADMIN$ maybe important<br/>
+<br/>
+#smbclient \\\\192.168.57.4\\ADMIN$<br/>
+ADMIN$ wont allow annonymous access but IPC$ does<br/>
+but when we try to ls after #smbclient \\\\192.168.57.4\\IPC$ :we get aaccess denied<br/>
+</body></html>

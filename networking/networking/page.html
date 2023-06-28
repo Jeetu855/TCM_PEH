@@ -1,0 +1,134 @@
+<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Networking</title>
+</head><body>cmd:ifconfig <br/>
+o/p:<br/>
+<br/>
+Ip address are layer 3(network layer)<br/>
+<br/>
+inet=ipv4 <br/>
+dotted decimal<br/>
+4 oectets(8 bits):<br/>
+total length: 32 bits<br/>
+192.168.x.x :private ip<br/>
+<br/>
+inet6=ipv6<br/>
+hexadecimal: <br/>
+total length:128 bits<br/>
+<br/>
+-----------------------------------------------------<br/>
+<br/>
+MAC:Media Access Control<br/>
+o/p:ether<br/>
+MAC:physical address<br/>
+layer 2<br/>
+related to switching<br/>
+length:48 bits<br/>
+first 24 bits: OUI(Organisationally Unique Identifier)<br/>
+Used to communicate when we use switches<br/>
+NIC(Network Interface Cards) have MAC address<br/>
+<br/>
+---------------------------------------------------------<br/>
+<br/>
+TCP UDP layer 4<br/>
+<br/>
+TCP(Transmission Control Protocol)<br/>
+Connection oriented protocol <br/>
+high reliability<br/>
+http ftp ssh utilise TCP<br/>
+Web services<br/>
+3 way handshake<br/>
+1)Send SYN<br/>
+2)Receive SYN+ACK<br/>
+3)Send ACK<br/>
+<br/>
+<br/>
+UDP(User Datagram Protocol)<br/>
+Connectionless protocol<br/>
+VOIP, Streaming Service, DNS<br/>
+<br/>
+<br/>
+----------------------------------------------------<br/>
+<br/>
+Commom Ports and Protocols<br/>
+<br/>
+<br/>
+<img src="image.png"/><br/>
+<br/>
+<br/>
+<br/>
+DNS is both TCP and UDP<br/>
+DHCP : DORA: like getting job offer<br/>
+<br/>
+--------------------------------------------------------------------------<br/>
+<br/>
+OSI Model(<b>Open System Interconnection</b>)<br/>
+<br/>
+1) Physical Layer:cables ,hubs<br/>
+<br/>
+2) Data Link Layer: has 2 sub layers<ul><li style="list-style-type: none">i)MAC(Medium Access Control) layer</li>
+<li style="list-style-type: none">ii)Logic Link Layer</li>
+</ul>
+MAC address <br/>
+switching<ul><li style="list-style-type: none"/>
+</ul>
+3) Network Layer<br/>
+IP address routing<br/>
+<br/>
+4) Transport Layer<br/>
+TCP<br/>
+UDP<br/>
+<br/>
+5) Session Layer<br/>
+session management<br/>
+<br/>
+6) Presentation Layer<br/>
+jpeg,mp4,character encoding UTF-8<br/>
+<br/>
+7) Application Layer<br/>
+HTTP, SMTP<br/>
+<br/>
+<br/>
+When troubleshooting: start from layer 1<br/>
+<br/>
+Sending data: layer 7 - to - layer 1<br/>
+<br/>
+Receving data: layer 1 - to - layer 7<br/>
+<br/>
+-------------------------------------------------------<br/>
+<br/>
+Subnetting<br/>
+<br/>
+AND operation of Subnet mask and Given IP gives network IP(AND operation on the bits)<br/>
+First IP is Network IP<br/>
+Last IP is for Directed Broadcast<br/>
+255.255.255.255 is for limited broadcast(Broadcasting within the netowork)<br/>
+<br/>
+CIDR(Classless InterDomain Routing)<br/>
+/24:(WAK 24)means 24 bits belong to network ID(NID) and 8 bits belong to Host ID(HID)<br/>
+<br/>
+Subtract 2 from number of hosts in a network to get actual number of hosts since first and last IP not used for hosts<br/>
+<br/>
+Subnetting: some bits from HID become NID bits<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body></html>
