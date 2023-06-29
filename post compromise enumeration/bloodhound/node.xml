@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<version>6</version>
+<dict>
+  <key>title</key><string>Bloodhound</string>
+  <key>nodeid</key><string>37b9abec-1d2d-415d-aadc-29d5c60101ca</string>
+  <key>modified_time</key><integer>1688069027</integer>
+  <key>version</key><integer>6</integer>
+  <key>content_type</key><string>text/xhtml+xml</string>
+  <key>created_time</key><integer>1688061235</integer>
+  <key>order</key><integer>1</integer>
+</dict>
+</node>

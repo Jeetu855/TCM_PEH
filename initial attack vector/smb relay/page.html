@@ -5,6 +5,9 @@
 <title>SMB Relay</title>
 </head><body><img src="image.png" /><br/>
 <br/>
+<img src="image 24.png" /><br/>
+<br/>
+important thing for relay attacks is that the machine from which we got hash must be an ADMIN on the machine we are relaying the hash to<br/>
 <br/>
 <br/>
 SMB signing must be off<br/>
@@ -30,7 +33,7 @@ relay the credentials form facstle(192.168.57.17) to pparker(192.168.57.18)<br/>
 <img src="image 5.png" /><br/>
 <br/>
 <br/>
--tf:target file<br/>
+-tf:target file containg IP of the machine we are relaying ntlmv2 hash to<br/>
 <br/>
 also run responder alongside it<br/>
 <br/>
@@ -38,11 +41,14 @@ OR &nbsp; <br/>
 <br/>
 <img src="image 19.png" /><br/>
 <br/>
--t:target<br/>
+-t:target we are relaying ntlmv2 hash to<br/>
+the machine from which we got hash(punisher) enter something that could not be resolved by its DNS and we got its ntlmv2 hash with responder, relayed it to ntlmrelay<br/>
+<br/>
+important thing for relay attacks is that the machine from which we got hash must be an ADMIN on the machine we are relaying the hash to<br/>
 <br/>
 we also get local users SAM hash<br/>
 <br/>
-<img src="image 20.png" /><br/>
+<br/>
 <br/>
 <img src="image 6.png" /><br/>
 <br/>
@@ -53,6 +59,8 @@ on the shell having<br/>
 <img src="image 8.png" /><br/>
 <br/>
 SAM hashes sam as the ones in /etc/shadow<br/>
+<br/>
+<img src="image 20.png" /><br/>
 <br/>
 to get a shell use command<br/>
 #impacker-ntlmrelayx -tf target.txt -smb2support -i<br/>
