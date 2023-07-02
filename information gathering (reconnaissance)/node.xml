@@ -2,6 +2,7 @@
 <node>
 <version>6</version>
 <dict>
+  <key>expanded</key><false/>
   <key>title</key><string>Information Gathering (Reconnaissance)</string>
   <key>nodeid</key><string>c47d1730-067a-4f0d-ab71-fd5498166d57</string>
   <key>modified_time</key><integer>1682573115</integer>

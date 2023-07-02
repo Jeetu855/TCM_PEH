@@ -2,7 +2,7 @@
 <node>
 <version>6</version>
 <dict>
-  <key>expanded</key><true/>
+  <key>expanded</key><false/>
   <key>title</key><string>Initial Attack Vecotr</string>
   <key>nodeid</key><string>73da1058-6b32-462c-854e-751dadc9ebe4</string>
   <key>modified_time</key><integer>1687904116</integer>

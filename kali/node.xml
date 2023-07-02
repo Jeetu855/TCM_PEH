@@ -2,6 +2,7 @@
 <node>
 <version>6</version>
 <dict>
+  <key>expanded</key><false/>
   <key>title</key><string>Kali</string>
   <key>nodeid</key><string>18a13304-7c01-41ac-bd86-43d22e292f26</string>
   <key>modified_time</key><integer>1682354589</integer>
