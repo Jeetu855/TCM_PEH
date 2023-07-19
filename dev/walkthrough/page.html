@@ -73,7 +73,18 @@ jp:probably the name of user:use it in ssh connection attempt<br/>
 we must have an ssh account on the server to be able to use it<br/>
 id_rsa can be used to connect via ssh(in nmap scan we saw ssh port 22 open)<br/>
 <br/>
+<br/>
+<br/>
 #ssh -i id_rsa jp@192.168.57.9<br/>
+<br/>
+connection to a remote server using a private key for authentication<ul><li>ssh: This is the command used to initiate an SSH connection to a remote server.</li>
+<li>-i id_rsa: This option specifies the identity file, i.e., the private key used for authentication. In this case, the private key file is named id_rsa. The private key file must be present in the current directory or you need to provide the full path to the private key file</li>
+</ul>
+<br/>
+SSH key-based authentication is an alternative to using passwords for authentication. Instead of entering a password each time you connect to a remote server, you use a private-public key pair. The private key (`id_rsa` in this case) remains on your local machine, while the public key is added to the `~/.ssh/authorized_keys` file on the remote server.<br/>
+<br/>
+Before using the `ssh` command with an identity file, make sure the private key (`id_rsa` in this case) has the correct permissions set to keep it secure:<br/>
+<br/>
 <img src="image 10.png" /><br/>
 <br/>
 <br/>
