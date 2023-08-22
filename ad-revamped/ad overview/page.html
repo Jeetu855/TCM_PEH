@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>AD overview</title>
+</head><body><br/>
+Phonebook for windows or Identity Management Tickets<br/>
+Directory service developed by micrsoft to manage windows domain admin<br/>
+Stores info related to objects such as computers, users, printers etc.<br/>
+Authenticates using kerberos tickets<br/>
+Non windows machine like linux and firewalls can also authenticate to AD via RADIUS(Remote Authentication Dial In User Service) or LDAP(Lightweight Direcotry access protocol)<br/>
+<br/>
+<br/>
+Physical AD components<br/>
+<br/>
+1) Domain Controller<br/>
+Controls everything of a domain<br/>
+It is a server with AD DS server role<br/>
+Host a copy of AD AD(Active Directory Data Store) <br/>
+Provides authentication and autorization services<br/>
+Replicate updates to other domain controllers in domain and forest<br/>
+Allows administrative access and manage user accounts<br/>
+<br/>
+2)AD DS<br/>
+Contains database files<br/>
+Consists of NTDS.dit file<br/>
+is stored by default is %SystemRoot%\NTDS<br/>
+Accessible only through domain controller<br/>
+<br/>
+Logical Components<br/>
+<br/>
+1)Schema(RuleBook)<br/>
+AD DS Schema defines every type of object that can be stored in directory<br/>
+Enforces rules regarding object creation and configuration<br/>
+<br/>
+Class Object : What object can be created in directory : eg, user, computers<br/>
+Attribute object : Information that can be attached to the object : eg display name<br/>
+<br/>
+2)Domain<br/>
+<br/>
+Group and manage objects(user,computer) in organisation<br/>
+Administrative boundires for applying policies to group of objects<br/>
+Authntication and authorization boundry that provides a way to limit scope of accss to resources<br/>
+<br/>
+3)Tree<br/>
+<img src="image.png" /><br/>
+Domain tree is heirarchy of domains in AD DS<br/>
+All domains in a tree share<br/>
+a)Contiguous namespace with parent domain(like subdomains)<br/>
+b)Can have additional child domains<br/>
+c)By default create 2 way transitive trust with other domains<br/>
+<br/>
+&nbsp;<br/>
+4)Forest<br/>
+<img src="image 2.png" /><br/>
+Collection of one or more domain trees<br/>
+Share common shcema<br/>
+Share common configuration pattern<br/>
+Enable trust between all domains in forest<br/>
+Share enterprise admins and schema admin groups<br/>
+<br/>
+<br/>
+5)Organisational Units(objects are inside OU)<br/>
+OUs are AD containers than contain users, groups, computers and other OUs<br/>
+OUs are used to<br/>
+a)Represnt the organisation heirarchially and logically<br/>
+b)Manage a collection of objects in a consistent way<br/>
+c)Delegate permissions to admin groups of objects<br/>
+d)Apply policies<br/>
+<br/>
+<br/>
+6)Trusts<br/>
+Mechanism that allows user to gain access to resources in another domain<br/>
+All domains in forest trust all other domains in that forest<br/>
+Trust can extend outside the forest<br/>
+<img src="image 3.png" /><br/>
+<br/>
+<br/>
+<img src="image 4.png" /><br/>
+<br/>
+<br/>
+</body></html>

