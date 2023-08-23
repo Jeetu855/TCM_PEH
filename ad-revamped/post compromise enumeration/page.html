@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Post Compromise Enumeration</title>
+</head><body>1)ldapdomaindump<br/>
+<br/>
+#sudo ldapdomaindump ldaps://192.168.57.26 -u 'MARVEL\fcastle' -p P@ssword<br/>
+<br/>
+same info as we got from mitm6 lootme <br/>
+<br/>
+2)Bloodhound<br/>
+<br/>
+#sudo neo4j console<br/>
+<br/>
+#sudo bloodhound<br/>
+username:neo4j<br/>
+passwd:Password<br/>
+<br/>
+#sudo bloodhound-python -d MARVEL.local -u fcastle -p P@ssword -ns 192.168.57.25 -c all<br/>
+<br/>
+-d: domain<br/>
+-u:username<br/>
+-p:password<br/>
+-ns:nameserver(here its the ip of DC)<br/>
+-c:what type of info are we collecting<br/>
+<br/>
+3)Plumhound<br/>
+<br/>
+git clone it in /opt directory and cd into it<br/>
+#sudo pip3 install -r requirements.txt<br/>
+<br/>
+#sudo python3 Plumhound.py --easy -p Password(neo4j password)<br/>
+(dont turn off neo4j and bloodhound as it pulls data from bloodhound)<br/>
+n.name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;n.displayname<br/>
+&nbsp; &nbsp; &nbsp; -------------------------- &nbsp;---------------<br/>
+&nbsp; &nbsp; &nbsp; ADMINISTRATOR@MARVEL.LOCAL<br/>
+&nbsp; &nbsp; &nbsp; TSTARK@MARVEL.LOCAL &nbsp; &nbsp; &nbsp; &nbsp; Tony Stark<br/>
+&nbsp; &nbsp; &nbsp; SQLSERVICE@MARVEL.LOCAL &nbsp; &nbsp; SQL Service<br/>
+&nbsp; &nbsp; &nbsp; FCASTLE@MARVEL.LOCAL &nbsp; &nbsp; &nbsp; &nbsp;Frank Castle<br/>
+&nbsp; &nbsp; &nbsp; PPARKER@MARVEL.LOCAL &nbsp; &nbsp; &nbsp; &nbsp;Peter Parker<br/>
+&nbsp; &nbsp; &nbsp; KRBTGT@MARVEL.LOCAL<br/>
+&nbsp; &nbsp; &nbsp; GUEST@MARVEL.LOCAL<br/>
+<br/>
+# sudo python3 PlumHound.py -x tasks/default.tasks -p Password<br/>
+creates a reports directory , cd into it<br/>
+#firefox index.html<br/>
+<br/>
+<br/>
+<br/>
+</body></html>
